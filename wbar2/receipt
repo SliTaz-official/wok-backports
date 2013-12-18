@@ -1,0 +1,37 @@
+# SliTaz package receipt.
+
+PACKAGE="wbar2"
+VERSION="2.3.4"
+CATEGORY="system-tools"
+SHORT_DESC="Quick launch bar."
+MAINTAINER="gokhlayeh@slitaz.org"
+SOURCE="wbar"
+TARBALL="$SOURCE-$VERSION.tgz"
+WEB_SITE="http://code.google.com/p/wbar/"
+WGET_URL="http://wbar.googlecode.com/files/$TARBALL"
+CONFIG_FILES="/etc/default/wbar/wbar.cfg"
+TAGS="desktop launchbar"
+
+DEPENDS="ttf-dejavu imlib2 libglade gtk+"
+BUILD_DEPENDS="intltool imlib2-dev libglade-dev"
+
+# Rules to configure and make the package.
+compile_rules()
+{
+	cd $src
+	./configure --exec-prefix=/usr \
+		--sysconfdir=/etc &&
+	make && make install
+}
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()
+{
+	mkdir -p $fs/usr/share
+	
+	cp -a $install/usr/bin $fs/usr
+	cp -a $install/etc $fs/
+	cp -a $stuff/wbar.cfg $fs/etc/wbar.d
+	cp -a $install/usr/share/pixmaps $fs/usr/share
+	cp -a $install/usr/share/wbar $fs/usr/share
+}

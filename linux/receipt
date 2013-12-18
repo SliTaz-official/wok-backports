@@ -47,7 +47,6 @@ esac
 compile_rules()
 {
 	cd $src
-	cp /usr/share/boot/initrd initrd.cpio
 
 	if [ "$KBASEVER" != "$VERSION" ]; then
 		[ -s $SRC/$(basename $PATCH) ] ||

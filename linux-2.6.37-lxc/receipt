@@ -1,6 +1,6 @@
 # SliTaz package receipt
 
-PACKAGE="linux-lxc"
+PACKAGE="linux-2.6.37-lxc"
 VERSION="2.6.37"
 CATEGORY="misc"
 SHORT_DESC="The Linux kernel and modules with LXC support."

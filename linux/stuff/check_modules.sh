@@ -7,7 +7,7 @@
 #. /etc/slitaz/slitaz.conf
 
 #WOK=$LOCAL_REPOSITORY/wok
-WOK=$(cd `dirname $0` && pwd | sed 's/wok.*/wok/')
+WOK=$(cd `dirname $0` && pwd | sed 's|\(wok[^/]*\).*|\1|')
 VERSION=`grep  ^VERSION= $WOK/linux/receipt | cut -d "=" -f2 | sed -e 's/"//g'`
 BASEVER="${VERSION:0:3}"
 src="$WOK/linux/source/linux-$VERSION"

@@ -22,7 +22,7 @@ PATCH="$(dirname $WGET_URL)/patch-$VERSION.xz" &&
 EXTRA_SOURCE_FILES="$(basename $PATCH)"
 
 # Aufs enable chroot
-AUFS_NOT_RAMFS="uclibc-cross-compiler-x86_64 is not compatible with aufs+tmpfs 8("
+AUFS_NOT_SUPPORTED="uclibc-cross-compiler-x86_64 is not compatible with aufs+tmpfs 8("
 
 # This will save/restore modules.dep but we want to regenerate it on
 # install or upgrade.

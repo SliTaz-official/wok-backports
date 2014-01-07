@@ -2,6 +2,7 @@
 
 PACKAGE="linux"
 VERSION="3.2.53"
+_AUFSVER="20130311"
 KBASEVER="${VERSION:0:3}"
 CATEGORY="base-system"
 SHORT_DESC="The Linux kernel and modules."
@@ -85,13 +86,13 @@ compile_rules()
 
 	# Check for Aufs and cook it if unbuilt.
 	echo "Checking for Aufs packages..."
-	_AUFSVER=`grep ^VERSION= $WOK/aufs/receipt | cut -d "=" -f2 | sed -e 's/"//g'`
+	#_AUFSVER=`grep ^VERSION= $WOK/aufs/receipt | cut -d "=" -f2 | sed -e 's/"//g'`
 	if [ -x /usr/bin/cook ]; then
 		# Give info an redirect to /dev/null since aufs got it own log.
 		AUFSDIR=$WOK/aufs/source/aufs-${_AUFSVER}
 		[ -d "$AUFSDIR" ] && rm -rf $AUFSDIR
 		#echo "Cook: aufs $_AUFSVER"
-		cook aufs --getsrc
+		#cook aufs --getsrc
 		mkdir -p $WOK/aufs/source/
 		tar xjf $SRC/aufs-${_AUFSVER}.tar.bz2 -C $WOK/aufs/source/
 	elif [ -x /usr/bin/tazwok ]; then

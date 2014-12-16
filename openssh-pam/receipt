@@ -1,0 +1,65 @@
+# SliTaz package receipt.
+
+PACKAGE="openssh-pam"
+VERSION="6.7p1"
+CATEGORY="security"
+SHORT_DESC="Openbsd Secure Shell using PAM."
+MAINTAINER="pascal.bellard@slitaz.org"
+LICENSE="BSD"
+SOURCE="openssh"
+TARBALL="$SOURCE-$VERSION.tar.gz"
+WEB_SITE="http://www.openssh.org/"
+WGET_URL="ftp://ftp.fr.openbsd.org/pub/OpenBSD/OpenSSH/portable/$TARBALL"
+CONFIG_FILES="/etc/ssh /etc/inetd.conf"
+TAZPANEL_DAEMON="man::sshd|edit::/etc/ssh/sshd_config|options::OPENSSH_OPTIONS|web::$WEB_SITE"
+PROVIDE="openssh:pam ssh:pam"
+TAGS="ssh"
+
+DEPENDS="sftp-server libcrypto zlib pam"
+BUILD_DEPENDS="libcrypto-dev zlib-dev openssl-dev pam pam-dev"
+
+# Rules to configure and make the package.
+compile_rules()
+{
+	cd $src
+	./configure --prefix=/usr --sysconfdir=/etc/ssh --with-pam \
+		--with-privsep-user=nobody --with-privsep-path=/var/run/sshd \
+		--with-xauth=/usr/bin/xauth \
+		--libexecdir=/usr/sbin \
+		$CONFIGURE_ARGS &&
+	make &&
+	make DESTDIR=$DESTDIR install
+}
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()
+{
+	mkdir -p $fs/usr $fs/etc/init.d $fs/etc/ssh 
+	cp -a $install/usr/sbin $install/usr/bin $fs/usr
+	rm -f $fs/usr/sbin/sftp-server
+	cp -a $install/etc $fs
+	cp ../$SOURCE/stuff/openssh $fs/etc/init.d
+	sed -i 's/.*UsePAM.*/UsePAM yes/' $fs/etc/ssh/sshd_config
+}
+
+post_install()
+{
+	grep -q ssh $1/etc/inetd.conf || cat >> $1/etc/inetd.conf <<EOT
+#ssh	stream	tcp	nowait	root	sshd	sshd	-i
+EOT
+	while read dropbear openssh ; do
+		[ -s $1$dropbear ] || continue
+		dropbearconvert dropbear openssh $1$dropbear $1$openssh
+		dropbearkey -y -f $1$dropbear | grep ssh > $1$openssh.pub
+		dropbearkey -y -f $1$dropbear | grep Fingerprint
+	done <<EOT
+/etc/dropbear/dropbear_rsa_host_key	/etc/ssh/ssh_host_rsa_key
+/etc/dropbear/dropbear_dss_host_key	/etc/ssh/ssh_host_dsa_key
+EOT
+ssh-keygen -A
+}
+
+post_remove()
+{
+	grep -q sshd $1/etc/inetd.conf && sed -i '/sshd/d' $1/etc/inetd.conf
+}

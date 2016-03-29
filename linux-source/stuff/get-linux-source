@@ -64,7 +64,7 @@ To install the new kernel and the modules:
 $ make modules_install
 $ cp -a arch/x86/boot/bzImage /boot/vmlinuz-$VERSION-slitaz
 
-To make a Slitaz package with the new kernel and the modules:
+To make a SliTaz package with the new kernel and the modules:
 $ make tazpkg
 
 See /usr/src/linux-$VERSION/README

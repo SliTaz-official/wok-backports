@@ -31,7 +31,7 @@ if grep -q '^CONFIG_MODULES=y' .config ; then
 	[ -f $objtree/slitaz/gztazmod.sh ] && $objtree/slitaz/gztazmod.sh $fs/lib/modules/${VERSION}${LOCALVERSION}
 fi
 
-# Create Slitaz package
+# Create SliTaz package
 cat > $DIR/receipt <<EOT
 # SliTaz package receipt.
 

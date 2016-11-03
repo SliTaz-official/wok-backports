@@ -12,7 +12,7 @@ WGET_URL="${WEB_SITE}dist/v${VERSION%.*}/$TARBALL"
 TAGS="text-editor"
 HOST_ARCH="i486 arm"
 
-DEPENDS="ncursesw zlib"
+DEPENDS="ncursesw zlib wget"
 SUGGESTED="gpm"
 BUILD_DEPENDS="ncursesw-dev zlib-dev groff"
 SPLIT="nano-doc"

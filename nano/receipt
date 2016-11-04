@@ -6,15 +6,15 @@ CATEGORY="utilities"
 SHORT_DESC="Nano Text Editor"
 MAINTAINER="pankso@slitaz.org"
 LICENSE="GPL3"
-WEB_SITE="http://nano-editor.org/"
+WEB_SITE="https://nano-editor.org/"
 TARBALL="$PACKAGE-$VERSION.tar.gz"
 WGET_URL="${WEB_SITE}dist/v${VERSION%.*}/$TARBALL"
 TAGS="text-editor"
 HOST_ARCH="i486 arm"
 
-DEPENDS="ncursesw zlib wget"
+DEPENDS="ncursesw zlib"
 SUGGESTED="gpm"
-BUILD_DEPENDS="ncursesw-dev zlib-dev groff"
+BUILD_DEPENDS="wget ncursesw-dev zlib-dev groff"
 SPLIT="nano-doc"
 
 # Handle cross compilation

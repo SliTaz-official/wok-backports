@@ -282,7 +282,7 @@ INITRDALIGN=0x1000
 	rm -f $bs
 }
 
-if [ "$FORMAT" == "0" ]; then # unsplitted
+if [ "$FORMAT" = "0" ]; then # unsplitted
 	floppyset > $PREFIX
 	PAD=$(( 512 - ($(stat -c %s $PREFIX) % 512) ))
 	[ $PAD -ne 512 ] && ddq if=/dev/zero bs=1 count=$PAD >> $PREFIX
